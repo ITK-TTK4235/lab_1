@@ -13,7 +13,7 @@ jobs:
         uses: dante-ev/latex-action@latest
         with:
           root_file: main.tex
-          working-directory: Main
+          working_directory: Main
       - name: Upload PDF file
         uses: actions/upload-artifact@v3
         with:
