@@ -12,6 +12,7 @@ jobs:
       - name: Compile LaTeX document
         uses: dante-ev/latex-action@latest
         with:
+          working_directory: Main
           root_file: main.tex
       - name: Upload PDF file
         uses: actions/upload-artifact@v3
