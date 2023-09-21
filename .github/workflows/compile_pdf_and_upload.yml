@@ -1,6 +1,8 @@
 name: Build LaTeX document and upload
 on:
   push:
+    branches:
+      - main
     tags:
       - '*.*.*' # semantic versioning
 
