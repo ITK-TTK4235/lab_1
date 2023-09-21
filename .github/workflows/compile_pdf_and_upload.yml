@@ -1,4 +1,4 @@
-name: Build LaTeX document and upload release
+name: Build LaTeX document and upload
 on:
   push:
     tags:
@@ -11,10 +11,15 @@ jobs:
       - name: Set up Git repository
         uses: actions/checkout@v2
       - name: Compile LaTeX document
-        uses: xu-cheng/latex-action@v2
+        uses: dante-ev/latex-action@latest
         with:
           working_directory: Main
           root_file: main.tex
+      - name: Upload PDF file as artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: PDF
+          path: Main/main.pdf
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
