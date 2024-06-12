@@ -1,131 +1,30 @@
-\section{Oppgave 1 (100\%) - Funksjonsblokkdiagram}\label{sec:3-oppgave1}
+\section{Oppgave 1 (100\%) - Heisprogrammering med stigediagram}\label{sec:3-oppgave1}
+Å jobbe med tilpassede datasystemer er ofte en øvelse i å lese datablad, og å jobbe med PLS er på ingen måte noe unntak. En av grunnene til dette er det at tilpassede datasystemer er svært spesialiserte systemer, og i motsetning til generell programmering i en IDE finnes det derfor ofte kun informasjon om disse datasystemene i dokumentasjonen som blir gitt av leverandøren.\\
 
-Denne oppgaven skal gi dere grunnleggende kunnskap om programmering av PLSer med \verb|funksjonsblokkdiagrammer|. Før dere spør vitass eller læringsassistenter, sjekk ut appendiks \ref{app:feilsøking} for vanlige feil som kan oppstå under labben.
+I denne laboppgaven skal dere derfor bruke de utdelte databladene til å implementere grunnleggende heislogikk, og dette er derfor også en slags introduksjon til den neste laboppgaven i TTK4235, nemlig heislaben. Denne oppgaven inneholder to deler: heisspesifikasjon og datablad. Tanken er at dere skal implementere heisspesifikasjonen i Sysmac og overføre den til vår NX102-9000. Til hjelp så har dere den enkle walkthroughen vi gikk gjennom i starten av dette lab-dokumentet, samt den utdelte dokumentasjonen.\\
 
-\subsection{Grunnleggende funksjonsprogrammering av heis}
+Denne oppgaven skal gi dere grunnleggende kunnskap om programmering av PLSer med stigediagrammer. Før dere spør læringsassistenter, sjekk ut appendiksen, dokumentasjonen eller kurskompendiet for å se om dere finner svar på spørsmålene deres der.
 
-På hver labplass ligger det en manual med en detaljert veiledning for å komme i gang med programmering på PLSer fra Siemens: “Working with STEP 7”. Vi vil her ta utgangspunkt i de første 4 kapitlene, men siden manualen gjennomgår et eksempel av et annet system enn heisen
-vil vi gjøre noen endringer underveis. Til å starte, skal dere se på følgende:
+\subsection{Dokumentasjon}
+Dere har fått utdelt to pdfer med dokumentasjon, nemlig "Sysmac Studio Version 1 Operation Manual.pdf" og "Sysmac Kurskompendie.pdf". Førstnevnte er den fullstendige dokumentasjonen til Sysmac, og kan lastes ned fra Omron sin nettside \href{https://assets.omron.eu/downloads/manual/en/v5/w504_sysmac_studio_operation_manual_en.pdf}{HER}. Den andre er en slags introduksjon til programmet. Dersom dere lurer på noe veldig spesifikt ville jeg konsultert dokumentasjonen, mens kurskompendiet kan gi litt praktisk info om hvordan man faktisk bruker programmet. I denne laben forventes det bruk av dokumentasjonen, ettersom det er dette man får tilgang til dersom man skulle jobbet med NX102-9000 ute i industrien.\\
 
-\begin{itemize}
-        \item I kapittel 2 må dere velge riktig hardware. Typebetegnelsen (\verb|CPU313 / CPU315-| 
-        \verb|2 DP / andre|) på modulene står øverst i høyre hjørne på den fysiske PLS-blokken fra figur \ref{fig:siemens-pls}. Vi vil bruke “\verb|Function Block Diagram|” (\verb|FBD|) som
-programmeringsspråk.
+Tidligere i denne laben gikk vi gjennom hvordan man raskt kommer i gang med bruk av Sysmac, og dere trenger nok derfor ikke å gå så nøye gjennom de tre første kapitlene av dokumentasjonen. Kapittel 3 i dokumentasjonen, altså "Section 3 System Design", kan derimot være kjekk å ta en titt på dersom du har trøbbel med selve Sysmac-programmet.\\
 
+Kapittel 4, "Programming", er det dere vil få mest bruk for, og da særlig delkapittel 4-5 "Programming Ladder Diagrams". Her vil dere finne det dere trenger for å programmere stigediagrammer.\\
 
-\item Vi må nå fylle ut symboltabellen, slik at vi kan bruke mer lesbare navn enn hardwareadressene.
-Se i kapittel 3 for hvordan man redigerer symboltabellen. Adressene til
-knapper, lys og motor er gitt tidligere i subseksjon \ref{subsec:intefrace}. I kapittel 4.1 skal dere altså ikke
-kopiere symboltabell fra eksempel-prosjektet.
+Ut over dette vil kapittel 5, 6 og 7 kunne være nyttige for henholdsvis oppsett av PLSen, tilkopling til PLSen, samt debugging.\\
 
-\item I kapittel 4 trenger dere ikke å se på 4.2 og 4.3 som omhandler programmering i \verb|Statement List| (\verb|STL|) eller \verb|Ladder Logic| (\verb|LAD|). Men prøv gjerne å se hvordan programmet deres ville
-ha sett ut i de andre språkene ved hjelp av menyen \verb|View-> LAD|, \verb|View-> FBD| eller \verb|View-> STL|.
-\item I stedet for eksempelprogrammet i kapittel 4.4 skal vi skrive et enkelt program som styrer
-heisen manuelt med opp- og ned-knappene: Når minst en av “Jeg-vil-ned-knappene”
-trykkes, skal heisen kjøres nedover. Tilsvarende skal heisen kjøre oppover når minst en av
-“Jeg-vil-opp-knappene” trykkes. Når ingen av opp- eller ned-knappene holdes nede skal
-heisen stå i ro.
-\end{itemize}
+\subsection{Heisens funksjonalitet}
+Heisfunksjonaliteten skal implementeres gjennom stigeprogrammering, som består i å bygge stigediagram av stigetrinn slik vi gjorde tidligere i denne labteksten. I programmeringsområdet i Sysmac vil man finne byggeblokkene under "Toolbox", som man finner på høyre side av brukergrensesnittet. Her har man en søkefunksjon det kan lønne å benytte seg av. To viktige underkategorier i "Toolbox" er "Timer" og "Ladder Tools", hvor særlig "Rung", "Input" og "Output" er sentrale. Ellers refererer vi til kapittel 4.5 i dokumentasjonen. Eller anbefaler vi å eksperimentere med diverse "Function" og "Function Block" i stigediagrammene deres. Disse dukker altså opp når man høyreklikker på et stigetrinn i programmeringsvinduet. Her har man muligheten til å søke etter kodeord for ting man kan trenge, og det kan være lurt å teste ut kodeord som "logic", "timer", "MOVE", osv. Det er mulig å lese om de ulike byggeklossene direkte i Sysmac, også kan man også trykke på "Help" i menylinja helt øverst, eller se i den utdelte dokumentasjonen.
 
-\subsubsection*{Tips 1}
-Det er lurt å gruppere programdelene tidlig ettersom programmet dere lager vil bli forholdsvis stort. Lag derfor (minst) en funksjon (\verb|FC|) for hver deloppgave. Dere må huske å kalle funksjonene fra \verb|OB1|. \verb|OB1| er en organisasjonsblokk som kjøres
-syklisk i PLSen og er den eneste organisasjonsblokken vi trenger i hele denne lab-oppgaven.
-Funksjonsblokker (\verb|FB|er) og funksjoner (\verb|FC|er) ligger på nivået under organisasjonsblokkene
-i programhierarkiet. \verb|FB|er og \verb|FC|er må kalles fra en annen blokk for at koden skal bli utført.
-\verb|FB|er har en datablokk (\verb|DB|) knyttet til seg mens \verb|FC|er ikke har det. Hvis man ikke trenger å lagre unna data er det derfor best og enklest å bruke en \verb|FC| (funksjon), noe som er tilfelle i alle
-oppgavene for dag 1.
-
-\subsubsection*{Tips 2}
-Det er anbefalt å styre motoren med to “nettverk”: ett som setter retningen på motoren, og ett som
-setter hastigheten. For å sette ut analogt signal til motoren kan dere bruke to \verb|MOVE|-blokker.
-La en \verb|MOVE|-blokk sette et passende stort signal til motoren når en knapp er trykket og en
-annen \verb|MOVE|-blokk sette ut 0 når ingen knapper er trykket. For å styre retningen kan det være
-lurt å bruke en \verb|SR|-vippe.
-
-\subsection{Bestillingsknapplys funksjonalitet}
-
-Gjør følgende utvidelse av programmet: Registrer hvilken etasje heisen sist
-passerte og sett ut lys i tilsvarende lysdiode på betjeningstavla for heisen. Lysdioden skal lyse
-helt til heisen når en ny etasje.
-
-\subsection{Heisdør og obstruksjonsføler funksjonalitet}
-
-Gjør følgende utvidelse av programmet: Når noen utløser obstruksjonsføleren i
-døra skal døra åpnes og holdes åpen i 3 sekunder etter at signalet fra obstruksjonsføleren har
-gått lavt. Deretter skal døra lukkes.
-
-\subsubsection*{Tips 3}
-Se beskrivelsene av timer-instruksjonene (velg aktuell timer og tast "\verb|F1|"). Dere må selv avgjøre
-hvilken timer som er best egnet for formålet. Se også appendiks \ref{app:timer}.
-
-\subsection{Viderekommende funksjonsprogrammering av heis}
-
-Implementer en forenklet algoritme for personheisen:
+\subsubsection{Programmeringsoppgaven}
+Implementer følgende forenklede algoritme for heisoppførsel:
 
 \begin{itemize}
-    \item Stopp heisen og åpne døra i 3 sekunder i hver etasje.
-    \item Etter 3 sekunder kjører heisen videre i samme retning til en ny etasje nås.
+    \item Heisen starter i en etasje, og kjører deretter i heissjakten.
+    \item Heisen stopper og åpner døra i 3 sekunder i hvert etasje, og kjører deretter videre i samme retning til en ny etasje nås.
     \item Når heisen har nådd toppetasjen, settes retningen til nedover. 
     \item Når heisen har nådd bunnetasjen settes retningen til oppover. 
     \item Bestillingsknappene skal ikke ha noen virkning i denne forenklede implementeringen.
-    \item Ta med registereringen av siste passerte etasje som dere gjorde i oppgave 1a.
+    \item Når en etasje nås skal det tilhørende etasjelyset lyse helt til en ny etasje nås.
 \end{itemize}
-
-\subsection*{\color{RWTHrot100}Lagring}
-Det kan lønne seg å ta vare på programmet i de foregående punktene da deler av det kan brukes
-senere i oppgaven. Trenger dere å ta med dere prosjektet kan dere enten kopiere alle filene
-STEP 7 lager eller dere kan lagre prosjektet komprimert. I sistnevnte tilfelle brukes menyvalget \verb|File->Archive|. For å kunne jobbe med prosjektet senere må dere pakke det ut med menyvalget
-\verb|File->Retrieve|.
-
-
-\section{Oppgave 2 - Sekvensielle funksjonsdiagram (Frivillig)}\label{sec:4-oppgave}
-
-Denne oppgaven skal gi dere grunnleggende kunnskaper om programmering av PLSer med \verb|sekvensielle funksjonsblokkdiagrammer| (\verb|SFC|). Her skal vi bruke verktøyet "S7 Graph"
-
-\subsection{Grunnleggende sekvensprogrammering av heis}
-
-Ta utgangspunkt i kapittel 3 fra manualen “S7 Graph V5.2 for S7-300/400 - Programming
-Sequential Control Systems” for å implementere den forenklede personheisen fra oppgave 1c, men nå ved bruk av sekvensprogrammering (S7 GRAPH). Dere skal altså ikke taste inn drilleksempelet
-fra manualen, men bare bruke dette som et eksempel på hvordan et slikt program
-kan se ut. Fortsett på prosjektet fra dag 1: Legg til en ny funksjonsblokk (Se kapittel 5.1 i
-"Working with STEP 7"), og velg \verb|GRAPH| som programmeringsspråk.
-
-
-Før dere laster ned programmet til den fysiske PLSen må dere gjøre en liten endring i oppsettet
-til funksjonsblokken som inneholder sekvensprogrammet: I “\verb|GRAPH|”-editoren velger dere:
-\texttt{Options->Block Settings->Compile/Save->Executability->}\newline\verb|Full code|. Hele koden for
-sekvensen dere har programmert samt en del systemspesifikke ting blir da lagt inn i
-funksjonsblokken (\verb|FB|en) og den tilhørende datablokken (\verb|DB|en). 
-
-Hvis systemet allerede har
-opprettet en blokk som heter \verb|FC72|, må dere slette den fra prosjektet deres. \verb|FC72| inneholder en
-del generelle ting for administrering av sekvenser. Dersom vi kun har en sekvensblokk vil vi
-spare minneplass hvis vi genererer “full kode” i den aktuelle funksjonsblokka. PLSene vi har
-på labben har så begrenset minnekapasitet at vi kun har plass til en sekvensblokk og denne må
-være generert som “full kode”.
-
-\subsubsection*{Tips 4}
-
-Det går ikke an å kalle \verb|MOVE|-blokker fra S7 GRAPH, vi kan kun sette verdien av utganger
-eller boolske variabler. Hvis man legger til en ny boolsk variabel i symboltabellen (som for eksempel: "\verb|MOTOR_ENABLE|"), så kan dere bruke denne som inngang til \verb|MOVE|-blokker i en ny
-funksjon (\verb|fc|). Se i appendiks \ref{app:adresse} for hvordan man oppretter variabler i lokalt minne.
-
-\subsection{Bestillingsknapplys funksjonalitet}
-
-Utvid funksjonaliteten slik at når noen trykker på en bestillingsknapp lyser knappen helt til bestillingen er effektuert.
-
-
-\subsubsection*{Tips 5}
-Det kan lønne seg å sette lyset i bestillingsknappene med en \verb|SR|-vippe eller en “Sett-operasjon” i et \verb|funksjonsblokkdiagram|, mens resetting av lyset i bestillingsknappene i et \verb|sekvensielt funksjonsdiagram|.
-
-\subsection{Viderekommende sekvensprogrammering av heis}
-
-\begin{itemize}
-    \item Forbedre algoritmen slik at heisen stopper i 2. og 3. etasje bare hvis det er noen som har bestilt den derfra. Når heisen kommer til endeetasjene (1. og 4.) skal den fortsatt alltid stoppe.
-
-\item Gjør heisen mer effektiv ved å la være å stoppe i midtetasjene hvis det er mottatt en
-bestilling i motsatt retning av hva heisen går i for øyeblikket. Det er for eksempel ingen vits
-i å stoppe i 3. etasje hvis heisen er på vei oppover og personene i 3. etasje vil ned.
-\end{itemize}
-
-
